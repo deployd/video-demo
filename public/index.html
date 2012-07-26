@@ -1,0 +1,36 @@
+<!doctype html>
+
+<html ng-app>
+  <head>
+	  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	  <script src="/dpd.js"></script>
+	  <script src="/js/angular.js"></script>
+	  <script src="/js/app.js"></script>
+	  <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body ng-controller="ListController">
+		<form ng-hide="me" ng-submit="login()">
+			<h1>Login</h1>
+  		<input placeholder="email" ng-model="email" type="text" />
+  		<input placeholder="password" ng-model="password" type="password" />
+  		<button>login</button>
+  	</form>
+		<div id="list" ng-show="me">
+			<h1>{{ (uid == me.id) && 'your' || (creator + "'s") }} shopping list</h1>
+			<button id="logout" ng-click="logout()">logout</button>
+			<ul>
+				<li ng-repeat="product in products">
+					<input type="checkbox" ng-model="product.purchased" ng-click="change(product)" />
+					<span class="item-name">{{ product.title }}</span>
+					<strong>${{ product.price || '0.00' }}</strong>
+				</li>
+			</ul>
+			<p style="font-weight: bold; width: 204px; text-align: right;">total: ${{total()}}</p>
+			<form ng-submit="add()">
+				<input type="text" ng-model="newItemText" placeholder="item" />
+				<input type="text" ng-model="newItemPrice" placeholder="price" />
+				<button>add</button>
+			</form>
+		</div>
+  </body>
+</html>

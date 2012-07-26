@@ -1,0 +1,59 @@
+{
+	"d10e2b5964a76b5b": {
+		"properties": {
+			"title": {
+				"required": false,
+				"type": "string",
+				"typeLabel": "string",
+				"id": "title"
+			},
+			"price": {
+				"required": false,
+				"type": "number",
+				"typeLabel": "string",
+				"id": "price"
+			},
+			"purchased": {
+				"required": false,
+				"type": "boolean",
+				"typeLabel": "string",
+				"id": "purchased"
+			},
+			"creator": {
+				"required": false,
+				"type": "string",
+				"typeLabel": "string",
+				"id": "creator"
+			}
+		},
+		"onGet": "",
+		"onPost": "if(!me) cancel('you are not logged in', 401);\n\nthis.creator = me.id;\nemit('products:changed', this.creator);",
+		"onPut": "if(!me || this.creator != me.id) {\n    protect('title');\n    protect('price');\n    protect('creator');\n}\n\nemit('products:changed', this.creator);\n",
+		"onDelete": "if(!me || this.creator != me.id) cancel('this is not your product', 401);\n\nemit('products:changed', this.creator);",
+		"onValidate": "var totalPrice = this.price;\n\ndpd.products.get({id: {$ne: this.id}, creator: me && me.id}, function(products) {\n    products.forEach(function(product) {\n        totalPrice += product.price;\n    });\n    if(totalPrice > 100) {\n        error('price', 'total list price must be less than 100');\n    }\n})",
+		"path": "/products",
+		"order": 1,
+		"typeLabel": "Collection",
+		"type": "Collection",
+		"$renameFrom": "/products"
+	},
+	"15a3f22c37240809": {
+		"properties": {
+			"username": {
+				"required": false,
+				"type": "string",
+				"typeLabel": "string",
+				"id": "username"
+			}
+		},
+		"onGet": "",
+		"onPost": "/* Authentication */\n// if (!me || !me.isAdmin) {\n//   cancel(\"You must be an admin!\", 401);\n// }\n\n/* Automatic properties */\n// this.creator = me.id;\n// this.creatorName = me.name;\n",
+		"onPut": "/* Readonly properties */\n// protect(\"creator\");\n",
+		"onDelete": "",
+		"onValidate": "/* Validation */\n// if (this.name.length < 10) {\n//   error(\"name\", \"Must be at least 10 characters\");\n// }\n",
+		"path": "/users",
+		"order": 2,
+		"typeLabel": "Users Collection",
+		"type": "UserCollection"
+	}
+}

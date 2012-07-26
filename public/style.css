@@ -1,0 +1,8 @@
+* {font-family: helvetica;}
+body {width: 400px; margin: auto; padding-top: 60px;}
+ul {margin-left: 0px;}
+.item-name {display: inline-block; width: 100px;}
+form input {padding: 5px; font-size: 14px;}
+#list input {width: 70px;}
+form {margin-left: 35px;}
+#logout {position: absolute; top: 10px; right: 10px;}
